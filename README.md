@@ -1,2 +1,2 @@
 # TOTVS-FastAnalytics-Documentador
-FastAnalytics standard documentation tool
+FastAnalytics standard documentation tool.

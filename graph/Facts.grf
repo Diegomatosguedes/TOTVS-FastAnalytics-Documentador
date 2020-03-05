@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><Graph author="diego.guedes" created="Mon Mar 02 14:41:58 CST 2020" guiVersion="3.4.4.P" id="1583183565187" licenseType="Commercial" modified="Tue Mar 03 13:34:46 CST 2020" modifiedBy="diego.guedes" name="Facts" revision="1.16" showComponentDetails="true">
+<Global>
+<Metadata id="Metadata2" previewAttachmentCharset="ISO-8859-1">
+<Record fieldDelimiter="," name="Fatos_Input" previewAttachmentCharset="ISO-8859-1" recordDelimiter="\r\n" type="delimited">
+<Field name="URI" type="string"/>
+<Field name="Nome" type="string"/>
+<Field name="Descricao" type="string"/>
+<Field name="Tags" type="string"/>
+</Record>
+</Metadata>
+<Metadata id="Metadata9" previewAttachmentCharset="UTF-8">
+<Record fieldDelimiter="," name="Fatos_Output" previewAttachmentCharset="UTF-8" quotedStrings="true" recordDelimiter="\n" type="delimited">
+<Field name="Id" type="string"/>
+<Field name="Tipo" type="string"/>
+<Field name="Tags" type="string"/>
+<Field name="Nome" type="string"/>
+<Field name="Descricao" type="string"/>
+</Record>
+</Metadata>
+<Metadata id="Metadata0" previewAttachmentCharset="ISO-8859-1">
+<Record fieldDelimiter="," name="Response" previewAttachmentCharset="ISO-8859-1" recordDelimiter="\r\n" type="delimited">
+<Field name="response" type="string"/>
+</Record>
+</Metadata>
+<Property fileURL="workspace.prm" id="GraphParameter0"/>
+<Dictionary/>
+</Global>
+<Phase number="10">
+<Node charset="UTF-8" enabled="enabled" fileURL="port:$0.response:discrete" guiName="JSONReader" guiX="171" guiY="31" id="JSONREADER1" type="JSON_READER">
+<attr name="mapping"><![CDATA[<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+ 
+<Context xpath="/root/object/query/entries" outPort="0">
+  <Mapping cloverField="URI" xpath="link"/>
+  <Mapping cloverField="Nome" xpath="title"/>
+  <Mapping cloverField="Descricao" xpath="summary"/>
+  <Mapping cloverField="Tags" xpath="tags"/>
+</Context>]]></attr>
+</Node>
+<Node authConfiguration="{&quot;authMethod&quot;:&quot;GOODDATA&quot;,&quot;authCredentials&quot;:{}}" charset="UTF-8" enabled="enabled" guiName="/query/facts" guiX="28" guiY="31" id="QUERY_FACTS" requestMethod="GET" type="GENERIC_REST_CONNECTOR">
+<attr name="url"><![CDATA[https://${DOMAIN_URL}/gdc/md/${GDC_PROJECT_ID}/query/facts]]></attr>
+<attr name="requestHeaders"><![CDATA[Accept=application/json
+Content-Type=application/json
+]]></attr>
+</Node>
+<Node enabled="enabled" guiName="Reformat" guiX="314" guiY="31" id="REFORMAT2" type="REFORMAT">
+<attr name="transform"><![CDATA[//#CTL2
+import "trans/lib.ctl";
+// Transforms input record into output record.
+function integer transform() {
+	integer x =  (length($in.0.URI) - $in.0.URI.indexOf("obj/") - 4);
+	
+	$out.0.Id = '[' + right($in.0.URI, x) + ']';
+	$out.0.Nome = $in.0.Nome;
+	$out.0.Descricao = $in.0.Descricao;
+	$out.0.Tags = $in.0.Tags;
+	$out.0.Tipo = "Fato";
+	
+	return ALL;
+}
+
+// Called during component initialization.
+// function boolean init() {}
+
+// Called during each graph run before the transform is executed. May be used to allocate and initialize resources
+// required by the transform. All resources allocated within this method should be released
+// by the postExecute() method.
+// function void preExecute() {}
+
+// Called only if transform() throws an exception.
+// function integer transformOnError(string errorMessage, string stackTrace) {}
+
+// Called during each graph run after the entire transform was executed. Should be used to free any resources
+// allocated within the preExecute() method.
+// function void postExecute() {}
+
+// Called to return a user-defined error message when an error occurs.
+// function string getMessage() {}
+]]></attr>
+</Node>
+<Node charset="ISO-8859-1" enabled="enabled" fileURL="${DATA_TMP_DIR}/tmp_Facts.csv" guiName="tmp_Facts" guiX="459" guiY="31" id="TMP_FACTS" makeDirs="true" outputFieldNames="true" type="DATA_WRITER"/>
+<Edge debugMode="false" fromNode="JSONREADER1:0" guiBendpoints="" guiRouter="Manhattan" id="Edge22" inPort="Port 0 (in)" metadata="Metadata2" outPort="Port 0 (out)" toNode="REFORMAT2:0"/>
+<Edge debugMode="false" fromNode="QUERY_FACTS:0" guiBendpoints="" guiRouter="Manhattan" id="Edge21" inPort="Port 0 (in)" metadata="Metadata0" outPort="Port 0 (output)" toNode="JSONREADER1:0"/>
+<Edge debugMode="false" fromNode="REFORMAT2:0" guiBendpoints="" guiRouter="Manhattan" id="Edge0" inPort="Port 0 (in)" metadata="Metadata9" outPort="Port 0 (out)" toNode="TMP_FACTS:0"/>
+</Phase>
+</Graph>

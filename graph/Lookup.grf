@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?><Graph author="diego.guedes" created="Mon Mar 02 14:41:58 CST 2020" guiVersion="3.4.4.P" id="1583183565187" licenseType="Commercial" modified="Thu Mar 05 06:27:59 CST 2020" modifiedBy="diego.guedes" name="Facts" revision="1.22" showComponentDetails="true">
+<Global>
+<Metadata id="Metadata2" previewAttachmentCharset="UTF-8">
+<Record fieldDelimiter="," name="Metadata" previewAttachmentCharset="UTF-8" quotedStrings="true" recordDelimiter="\n" skipSourceRows="1" type="delimited">
+<Field name="Id" type="string"/>
+<Field name="Tipo" type="string"/>
+<Field name="Tags" type="string"/>
+<Field name="Nome" type="string"/>
+<Field name="Descricao" type="string"/>
+</Record>
+</Metadata>
+<Property fileURL="workspace.prm" id="GraphParameter0"/>
+<Dictionary/>
+</Global>
+<Phase number="10">
+<Node charset="ISO-8859-1" enabled="enabled" fileURL="${DATA_GOODDATA_DIR}/Lookup.csv" guiName="/gooddata/Lookup.csv" guiX="386" guiY="223" id="GOODDATA_LOOKUP_CSV" makeDirs="true" outputFieldNames="true" type="DATA_WRITER"/>
+<Node enabled="enabled" guiName="SimpleGather" guiX="237" guiY="223" id="SIMPLE_GATHER" type="SIMPLE_GATHER"/>
+<Node charset="ISO-8859-1" enabled="enabled" fileURL="${DATA_TMP_DIR}/tmp_Attributes.csv*" guiName="/tmp/tmp_Attributes.csv" guiX="16" guiY="116" id="TMP_TMP_ATTRIBUTES_CSV" type="DATA_READER"/>
+<Node charset="ISO-8859-1" enabled="enabled" fileURL="${DATA_TMP_DIR}/tmp_Elements.csv*" guiName="/tmp/tmp_Elements.csv" guiX="16" guiY="218" id="TMP_TMP_ELEMENTS_CSV" type="DATA_READER"/>
+<Node charset="ISO-8859-1" enabled="enabled" fileURL="${DATA_TMP_DIR}/tmp_Facts.csv*" guiName="/tmp/tmp_Facts.csv" guiX="16" guiY="18" id="TMP_TMP_FACTS_CSV" type="DATA_READER"/>
+<Node charset="ISO-8859-1" enabled="enabled" fileURL="${DATA_TMP_DIR}/tmp_Metrics.csv*" guiName="/tmp/tmp_Metrics.csv" guiX="17" guiY="421" id="TMP_TMP_METRICS_CSV" type="DATA_READER"/>
+<Node charset="ISO-8859-1" enabled="enabled" fileURL="${DATA_TMP_DIR}/tmp_Variables.csv*" guiName="/tmp/tmp_Variables.csv" guiX="16" guiY="319" id="TMP_TMP_VARIABLES_CSV" type="DATA_READER"/>
+<Edge fromNode="SIMPLE_GATHER:0" guiBendpoints="" guiRouter="Manhattan" id="Edge5" inPort="Port 0 (in)" metadata="Metadata2" outPort="Port 0 (out)" toNode="GOODDATA_LOOKUP_CSV:0"/>
+<Edge fromNode="TMP_TMP_ATTRIBUTES_CSV:0" guiBendpoints="" guiRouter="Manhattan" id="Edge2" inPort="Port 1 (in)" metadata="Metadata2" outPort="Port 0 (output)" toNode="SIMPLE_GATHER:1"/>
+<Edge fromNode="TMP_TMP_ELEMENTS_CSV:0" guiBendpoints="" guiRouter="Manhattan" id="Edge3" inPort="Port 2 (in)" metadata="Metadata2" outPort="Port 0 (output)" toNode="SIMPLE_GATHER:2"/>
+<Edge fromNode="TMP_TMP_FACTS_CSV:0" guiBendpoints="" guiRouter="Manhattan" id="Edge1" inPort="Port 0 (in)" metadata="Metadata2" outPort="Port 0 (output)" toNode="SIMPLE_GATHER:0"/>
+<Edge fromNode="TMP_TMP_METRICS_CSV:0" guiBendpoints="" guiRouter="Manhattan" id="Edge0" inPort="Port 4 (in)" metadata="Metadata2" outPort="Port 0 (output)" toNode="SIMPLE_GATHER:4"/>
+<Edge fromNode="TMP_TMP_VARIABLES_CSV:0" guiBendpoints="" guiRouter="Manhattan" id="Edge4" inPort="Port 3 (in)" metadata="Metadata2" outPort="Port 0 (output)" toNode="SIMPLE_GATHER:3"/>
+</Phase>
+</Graph>

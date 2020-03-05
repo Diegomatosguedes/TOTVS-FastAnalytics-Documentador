@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><Graph author="diego.guedes" created="Mon Mar 02 14:41:58 CST 2020" guiVersion="3.4.4.P" id="1583253997418" licenseType="Commercial" modified="Thu Mar 05 06:30:26 CST 2020" modifiedBy="diego.guedes" name="_Main" revision="1.19" showComponentDetails="true">
+<Global>
+<Property fileURL="workspace.prm" id="GraphParameter0"/>
+<Note alignment="1" backgroundColorB="225" backgroundColorG="255" backgroundColorR="255" enabled="true" folded="false" height="311" id="Note0" textColorB="0" textColorG="0" textColorR="0" textFontSize="8" title="DOCUMENTAÇÃO DAS MÉTRICAS DO PROJETO" titleColorB="0" titleColorG="0" titleColorR="0" titleFontSize="10" width="714" x="13" y="7">
+<attr name="text"><![CDATA[Após a execução do graph, utilizar a planilha excel "Doc.xlsm" da pasta "trans".
+
+ATENÇÃO - NÂO UTILIZAR NENHUM DOS SEGUINTES CARACTERES NOS NOMES / DESCRIÇÕES DAS MÉTRICAS:
+" (aspas duplas)
+\ (backslash)]]></attr>
+</Note>
+<Dictionary/>
+</Global>
+<Phase number="5">
+<Node baseURL="${DATA_GOODDATA_DIR}/*.csv" enabled="enabled" guiName="/gooddata/*.csv" guiX="26" guiY="112" id="GOODDATA_CSV" type="FILE_DELETE"/>
+</Phase>
+<Phase number="10">
+<Node enabled="enabled" graphName="${GRAPH_DIR}/Attributes.grf" guiName="Attributes" guiX="304" guiY="112" id="ATTRIBUTES" type="RUN_GRAPH"/>
+<Node enabled="enabled" graphName="${GRAPH_DIR}/Facts.grf" guiName="Facts" guiX="163" guiY="112" id="FACTS" type="RUN_GRAPH"/>
+<Node enabled="enabled" graphName="${GRAPH_DIR}/Metrics.grf" guiName="Metrics" guiX="304" guiY="214" id="METRICS" type="RUN_GRAPH"/>
+<Node enabled="enabled" graphName="${GRAPH_DIR}/Variables.grf" guiName="Variables" guiX="163" guiY="214" id="VARIABLES" type="RUN_GRAPH"/>
+</Phase>
+<Phase number="20">
+<Node enabled="enabled" graphName="${GRAPH_DIR}/Elements.grf" guiName="Elements" guiX="444" guiY="112" id="ELEMENTS" type="RUN_GRAPH"/>
+</Phase>
+<Phase number="30">
+<Node enabled="enabled" graphName="${GRAPH_DIR}/Lookup.grf" guiName="Lookup" guiX="444" guiY="214" id="LOOKUP" type="RUN_GRAPH"/>
+</Phase>
+<Phase number="40">
+<Node baseURL="${DATA_TMP_DIR}/*.csv" enabled="enabled" guiName="/tmp/*.csv" guiX="585" guiY="112" id="TMP_CSV" type="FILE_DELETE"/>
+</Phase>
+</Graph>
